@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const Item = require("../models/items");
 
 async function createUser(req, res) {
   const formObject = req.body;
@@ -19,20 +20,22 @@ async function addItem(req, res) {
   res.send(`your item id is ${itemID}`);
 }
 async function buyItem(req, res) {
-    const aUser = await User.getByID(req.params.userID);
-    const anItem = await aUser.checkItem(req.body.itemID);
-    if(anItem.message) {
-        res.send("This item does not exist, punk.");
-    } else {
-        const purchaseID = await aUser.buyItem(anItem.id);
-        res.send(`Your purchase id is ${purchaseID}`);
-        
-    }
+  const aUser = await User.getByID(req.params.userID);
+  const anItem = await aUser.checkItem(req.body.itemID);
+  if (anItem.message) {
+    res.send("This item does not exist, punk.");
+  } else {
+    const purchaseID = await aUser.buyItem(anItem.id);
+    console.log(anItem);
+    const deleteResults = await anItem.deleteItem(anItem.id);
+    console.log(deleteResults);
+    res.send(`Your purchase id is ${purchaseID}`);
+  }
 }
 
 module.exports = {
-    createUser,
-    getUser,
-    addItem,
-    buyItem
+  createUser,
+  getUser,
+  addItem,
+  buyItem
 };

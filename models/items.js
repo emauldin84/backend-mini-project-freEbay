@@ -1,45 +1,52 @@
-const db = require('./conn');
+const db = require("./conn");
 
 class Item {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    static getAllItems() {
-        return db.any(`
+  static getAllItems() {
+    return db
+      .any(
+        `
         select * from items
-        `)
-        .then(itemsData => {
-            const arrayOfInstances = [];
+        `
+      )
+      .then(itemsData => {
+        const arrayOfInstances = [];
 
-            itemsData.forEach(item => {
-
-                const itemInstance = new Item(item.id, item.name);
-                arrayOfInstances.push(itemInstance);
-            })
-            return arrayOfInstances;
-        })
-    }
-    static getByID(id) {
-        return db.one(`
+        itemsData.forEach(item => {
+          const itemInstance = new Item(item.id, item.name);
+          arrayOfInstances.push(itemInstance);
+        });
+        return arrayOfInstances;
+      });
+  }
+  static getByID(id) {
+    return db
+      .one(
+        `
         select * from items
         where id=${id}
-        `)
-        .then(itemData => {
-            const itemInstance = new Item(
-                itemData.id, itemData.name
-            )
-            return itemInstance;
-        })
-        .catch(err => {
-            return err;
-        })
-    };
-
-
-
-};
+        `
+      )
+      .then(itemData => {
+        const itemInstance = new Item(itemData.id, itemData.name);
+        return itemInstance;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
+  deleteItem(id) {
+    return db.result(
+      ` 
+        delete from items
+        where id=${id}
+        `
+    );
+  }
+}
 
 module.exports = Item;
