@@ -8,9 +8,18 @@ app.use(express.urlencoded({ extended: false }));
 
 const userRouter = require("./routes/users");
 const dashboardRouter = require('./routes/dashboard');
+const loginRouter = require('./routes/login');
 
 app.use("/users", userRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/login", loginRouter);
+
+// set up the views so that we can render to the page
+app.engine('html', es6Renderer);
+app.set('view engine', 'html');
+app.set('views', 'views');
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -59,6 +59,7 @@ class User {
         return userInstance;
       });
   }
+
   addItem(item) {
     return db
       .one(
@@ -73,10 +74,12 @@ class User {
         return newItemData.id;
       });
   }
+
   checkItem(id) {
     const theItem = Item.getByID(id);
     return theItem;
   }
+
   buyItem(id) {
     return db
       .one(
@@ -90,6 +93,21 @@ class User {
       .then(newOwnedData => {
         return newOwnedData.id;
       });
+  }
+
+  static getByUsername(username) {
+    return db.one(`
+    select * from users
+    WHERE username LIKE '${username}'
+    `)
+    .then(userData => {
+        const userInstance = new User(userData.id, userData.first_name, userData.last_name, userData.username, userData.email, userData.password);
+
+        return userInstance;
+    })
+    // if the username is not found in the SQL database
+    .catch(err => err)
+
   }
 }
 

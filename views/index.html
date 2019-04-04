@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>FreEbay</title>
+    <title>FreEbay</title> 
+    
 </head>
 <body>
+    <h2>${message}</h2>
+    
+    <form action="/login" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input name="username" type="text" class="form-control" id="username" aria-describedby="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input name="password" type="password" class="form-control" id="password" placeholder="Enter password">
+        </div>
+    
+        </div>
+        <button type="submit" class="btn btn-primary">Log In</button>
+      </form>
     
 </body>
 </html>
