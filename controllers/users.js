@@ -12,8 +12,15 @@ async function getUser(req, res) {
   const aUser = await User.getByID(userID);
   res.json(aUser);
 }
+async function addItem(req, res) {
+  const aUser = await User.getByID(req.params.userID);
+  const itemName = req.body.name;
+  const itemID = await aUser.addItem(itemName);
+  res.send(`your item id is ${itemID}`);
+}
 
 module.exports = {
   createUser,
-  getUser
+  getUser,
+  addItem
 };

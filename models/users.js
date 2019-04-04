@@ -43,14 +43,7 @@ class User {
       .one(
         `
         select * from users 
-        where id=${id}
-        
-        
-        
-        
-        
-        
-        
+        where id=${id} 
         `
       )
       .then(userData => {
@@ -63,6 +56,20 @@ class User {
           userData.password
         );
         return userInstance;
+      });
+  }
+  addItem(item) {
+    return db
+      .one(
+        `
+      INSERT INTO items (name)
+      values ($1)
+      returning id 
+      `,
+        [item]
+      )
+      .then(newItemData => {
+        return newItemData.id;
       });
   }
 }
