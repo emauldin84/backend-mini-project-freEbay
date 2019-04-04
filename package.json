@@ -18,6 +18,7 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "bcrypt": "^3.0.5",
     "express-es6-template-engine": "^2.1.7",
     "pg-promise": "^8.6.4"
   }
