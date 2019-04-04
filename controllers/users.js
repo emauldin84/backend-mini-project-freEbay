@@ -18,9 +18,21 @@ async function addItem(req, res) {
   const itemID = await aUser.addItem(itemName);
   res.send(`your item id is ${itemID}`);
 }
+async function buyItem(req, res) {
+    const aUser = await User.getByID(req.params.userID);
+    const anItem = await aUser.checkItem(req.body.itemID);
+    if(anItem.message) {
+        res.send("This item does not exist, punk.");
+    } else {
+        const purchaseID = await aUser.buyItem(anItem.id);
+        res.send(`Your purchase id is ${purchaseID}`);
+        
+    }
+}
 
 module.exports = {
-  createUser,
-  getUser,
-  addItem
+    createUser,
+    getUser,
+    addItem,
+    buyItem
 };

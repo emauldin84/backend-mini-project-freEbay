@@ -21,11 +21,25 @@ class Item {
             })
             return arrayOfInstances;
         })
-
     }
+    static getByID(id) {
+        return db.one(`
+        select * from items
+        where id=${id}
+        `)
+        .then(itemData => {
+            const itemInstance = new Item(
+                itemData.id, itemData.name
+            )
+            return itemInstance;
+        })
+        .catch(err => {
+            return err;
+        })
+    };
 
 
 
-}
+};
 
 module.exports = Item;
