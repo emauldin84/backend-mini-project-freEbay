@@ -25,7 +25,7 @@ class User {
         values ($1, $2, $3, $4, $5)
         returning id
         
-        `, [userObject.firstName, userObject.lastName, userObject.username, userObject.email, userObject.password])
+        `, [userObject.first_name, userObject.last_name, userObject.username, userObject.email, userObject.password])
         .then(newUserData => {
             return newUserData.id;
         })
@@ -33,6 +33,7 @@ class User {
     }
 
 
-
-
 }
+
+
+module.exports = User;
