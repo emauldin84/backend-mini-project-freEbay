@@ -39,6 +39,22 @@ class Item {
         return err;
       });
   }
+
+  static getItemByName(name) {
+    return db.one(`
+    select * from items
+    where name ILIKE '${name}'
+    
+    `)
+    .then(itemData => {
+      const itemInstance = new Item(itemData.id, itemData.name);
+      return itemInstance;
+    })
+  }
+
+
+
+
   deleteItem(id) {
     return db.result(
       ` 

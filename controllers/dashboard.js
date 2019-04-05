@@ -17,9 +17,9 @@ async function showDashboard(req, res) {
         })
 
     
-        const newArray = `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`;
+        // const newArray = `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`;
 
-        console.log(newArray);
+        // console.log(newArray);
     
         res.render('dashboard', {
             locals: {
@@ -50,10 +50,50 @@ async function addItemToDashboard(req, res){
 
 }
 
+// needs to check if the item exists in the items table
+// if it does, add item to owned items table (with the userID and itemID)
+// also removes from the items list
+// if it doesn't, error message "Item does not exist"
+async function claimItem(req, res) {
+    
+    const userID = req.session.user;
+
+    // needs to check if the item exists in the items table
+    // get array of all the items in the items table
+    const allItemsArray = await Item.getAllItems();
+    const claimedItem = req.body.claimitem;
+    console.log(`This is claimed item: ${claimedItem}`);
+    console.log(allItemsArray);
+
+    const itemInstance = await Item.getItemByName(claimedItem);
+    
+    const namesArray = [];
+
+    allItemsArray.forEach(item => {
+        namesArray.push(item.name);
+    });
+
+    // if the array of items has the claimed item inside of it
+    if (namesArray.includes(claimedItem)) {
+
+        // add item to owned items table
+        const ownedID = await User.buyItem(userID, itemInstance.id);
+
+        res.redirect('/dashboard');
+
+    } else {
+        res.send('this not working');
+    }
+
+
+
+}
+
 module.exports = {
 
     showDashboard,
-    addItemToDashboard
+    addItemToDashboard,
+    claimItem
 
 
 }

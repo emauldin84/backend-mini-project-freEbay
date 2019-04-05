@@ -80,7 +80,7 @@ class User {
     return theItem;
   }
 
-  buyItem(id) {
+  static buyItem(userid, itemid) {
     return db
       .one(
         `
@@ -88,7 +88,7 @@ class User {
             values ($1, $2)
             returning id
             `,
-        [this.id, id]
+        [userid, itemid]
       )
       .then(newOwnedData => {
         return newOwnedData.id;
