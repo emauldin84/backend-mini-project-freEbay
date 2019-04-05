@@ -10,6 +10,14 @@ const userRouter = require("./routes/users");
 const dashboardRouter = require('./routes/dashboard');
 const loginRouter = require('./routes/login');
 
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
+app.use(session({
+  store: new FileStore(),
+  secret: 'efoijweaoiejawoifeawaefew'
+}));
+
 app.use("/users", userRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/login", loginRouter);

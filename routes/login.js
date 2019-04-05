@@ -3,12 +3,12 @@ const loginRouter = express.Router();
 
 const {
     showLogin,
-    checkUsername
+    checkLogin
 } = require('../controllers/login');
 
 
 loginRouter.get('/', showLogin);
-loginRouter.post('/', checkUsername);
+loginRouter.post('/', checkLogin);
 
 
 

@@ -109,6 +109,21 @@ class User {
     .catch(err => err)
 
   }
+
+  checkPassword(aPassword) {
+
+    // check that the password entered in the form matches the password that is in the database (aka password for that instance of User)
+
+    // aPassword comes from req.body.password (which is from the form)
+    // this.password is the instance's password (the instance is calling this function)
+    // if the passwords match
+    if (aPassword === this.password) {
+      return true;
+    // if the passwords don't match
+    } else {
+      return false;
+    }
+  }
 }
 
 module.exports = User;

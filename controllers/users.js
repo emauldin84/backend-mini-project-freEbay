@@ -11,8 +11,7 @@ async function getUser(req, res) {
   //console.log(req.params.userID);
   const userID = req.params.userID;
   const aUser = await User.getByID(userID);
-  // res.json(aUser);
-  res.render('index');
+  res.json(aUser);
 }
 
 async function addItem(req, res) {

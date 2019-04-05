@@ -11,9 +11,23 @@ async function showAllItems(req, res) {
 
 }
 
+function showDashboard(req, res) {
+
+    // render the dashboard to the screen, if there is a record of the user session
+    if (req.session.user) {
+        // render the dashboard html view page
+        res.render('dashboard');
+    // if the user is not logged in already (aka no user session in record)
+    } else {
+        // redirect to login
+        res.redirect('/login');
+    }
+}
+
 module.exports = {
 
-    showAllItems
+    showAllItems,
+    showDashboard
 
 
 }
