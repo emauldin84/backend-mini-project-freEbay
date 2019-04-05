@@ -6,10 +6,14 @@ async function showAllItems(req, res) {
 
     const allItemsArray = await Item.getAllItems();
 
-    res.json(allItemsArray);
+    res.render('dashboard', {
+        locals: {
+            array: `${allItemsArray.map(item => `<li>${item.name}</li>`).join(' ')}`
+                
+            }
+        })
+    };
 
-
-}
 
 function showDashboard(req, res) {
 

@@ -1,12 +1,12 @@
 const User = require('../models/users');
 
 function showLogin(req, res) {
-
+    req.session.destroy();
     res.render('index', {
         locals: {
             message: ''
         }
-    });
+    })
 }
 
 async function checkLogin(req, res) {
@@ -34,7 +34,10 @@ async function checkLogin(req, res) {
         req.session.user = theUser.id;
 
         // redirect the page to localhost:3001/dashboard
-        res.redirect('/dashboard');
+        req.session.save(() => {
+            res.redirect('/dashboard');
+        })
+
 
 
     

@@ -11,6 +11,7 @@ const {
 
 // URL is: localhost:3001/dashboard
 dashboardRouter.get('/', showDashboard)
+dashboardRouter.get('/items', showAllItems)
 
 
 
