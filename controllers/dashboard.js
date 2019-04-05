@@ -56,7 +56,9 @@ async function addItemToDashboard(req, res){
 // if it doesn't, error message "Item does not exist"
 async function claimItem(req, res) {
 
-    const userID = req.session.user;
+    console.log(req.session);
+
+    const userID = req.session.user.id;
 
     // needs to check if the item exists in the items table
     // get array of all the items in the items table
