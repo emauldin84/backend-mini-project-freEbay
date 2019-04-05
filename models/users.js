@@ -60,7 +60,7 @@ class User {
       });
   }
 
-  addItem(item) {
+  static addItem(item) {
     return db
       .one(
         `

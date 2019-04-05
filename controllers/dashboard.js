@@ -1,4 +1,5 @@
 const Item = require('../models/items');
+const User = require('../models/users')
 
     
 // coming from a get request
@@ -42,8 +43,10 @@ async function addItemToDashboard(req, res){
     // only an instance of User can add an item.
     // if you're on the dashboard, then there must be a record of theUser in session
 
-    const theUser = req.session.user;
-    res.send('this is working');
+    const theItem = req.body.additem;
+    const newItemID = await User.addItem(theItem);
+    res.redirect('/dashboard');
+    
 
 }
 
