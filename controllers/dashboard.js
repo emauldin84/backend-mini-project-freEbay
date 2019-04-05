@@ -55,7 +55,7 @@ async function addItemToDashboard(req, res){
 // also removes from the items list
 // if it doesn't, error message "Item does not exist"
 async function claimItem(req, res) {
-    
+
     const userID = req.session.user;
 
     // needs to check if the item exists in the items table
@@ -75,6 +75,9 @@ async function claimItem(req, res) {
 
     // if the array of items has the claimed item inside of it
     if (namesArray.includes(claimedItem)) {
+
+        // delete item from items table
+        await itemInstance.deleteItem(itemInstance.id);
 
         // add item to owned items table
         const ownedID = await User.buyItem(userID, itemInstance.id);
