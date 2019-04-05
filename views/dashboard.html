@@ -12,7 +12,21 @@
     <h1>This is the dashboard</h1>
     <a href="/login" class="btn btn-primary btn-lg active float-right d-inline" role="button">Logout</a>
     
+    <div class="container">
+
+
+        <form action="/dashboard/sell" method="POST">
+            <div class="form-group col-md-6">
+              <label for="additem" class="sr-only">Add Item</label>
+              <input name="additem" type="text" class="form-control" id="additem" aria-describedby="additem" placeholder="Add Item here">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Item</button>
+        </form>
+
+    </div>
     <ul class="list-unstyled">${array}</ul>
+
 
 
 </body>

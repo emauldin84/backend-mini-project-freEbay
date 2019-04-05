@@ -1,26 +1,33 @@
 const Item = require('../models/items');
 
-async function showAllItems(req, res) {
-    // needs to print all items from the database to the screen
-    // need to access Item class from models
-
-    const allItemsArray = await Item.getAllItems();
-
-    res.render('dashboard', {
-        locals: {
-            array: `${allItemsArray.map(item => `<li>${item.name}</li>`).join(' ')}`
-                
-            }
-        })
-    };
-
-
-function showDashboard(req, res) {
-
-    // render the dashboard to the screen, if there is a record of the user session
+    
+// coming from a get request
+async function showDashboard(req, res) {
+        
+        // render the dashboard to the screen, if there is a record of the user session
     if (req.session.user) {
-        // render the dashboard html view page
-        res.render('dashboard');
+        
+        const allItemsArray = await Item.getAllItems();
+
+        const liArray = [];
+
+        allItemsArray.forEach(item => {
+            liArray.push(`<li>${item.name}</li>`)
+        })
+
+    
+        const newArray = `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`;
+
+        console.log(newArray);
+    
+        res.render('dashboard', {
+            locals: {
+                // array: `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`
+                array: liArray.join('')
+                    
+                }
+        })
+
     // if the user is not logged in already (aka no user session in record)
     } else {
         // redirect to login
@@ -28,10 +35,22 @@ function showDashboard(req, res) {
     }
 }
 
+// handle a route that is of type post
+
+async function addItemToDashboard(req, res){
+
+    // only an instance of User can add an item.
+    // if you're on the dashboard, then there must be a record of theUser in session
+
+    const theUser = req.session.user;
+    res.send('this is working');
+
+}
+
 module.exports = {
 
-    showAllItems,
-    showDashboard
+    showDashboard,
+    addItemToDashboard
 
 
 }

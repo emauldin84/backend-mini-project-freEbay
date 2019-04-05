@@ -1,12 +1,14 @@
 const User = require('../models/users');
 
 function showLogin(req, res) {
-    req.session.destroy();
+
+    // need to clear session here
+
     res.render('index', {
         locals: {
             message: ''
         }
-    })
+    });
 }
 
 async function checkLogin(req, res) {
@@ -30,14 +32,11 @@ async function checkLogin(req, res) {
         // then load the dashboard and save the user info in a session
 
         // session is how we will track whether or not user can see the dashboard
-        // store user id in the session
-        req.session.user = theUser.id;
+        // store instance of user in the session
+        req.session.user = theUser;
 
         // redirect the page to localhost:3001/dashboard
-        req.session.save(() => {
-            res.redirect('/dashboard');
-        })
-
+        res.redirect('/dashboard');
 
 
     

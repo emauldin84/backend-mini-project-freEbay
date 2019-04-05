@@ -2,8 +2,8 @@ const express = require('express');
 
 const dashboardRouter = express.Router();
 const {
-    showAllItems,
-    showDashboard
+    showDashboard,
+    addItemToDashboard
 
 } = require('../controllers/dashboard');
 
@@ -11,9 +11,10 @@ const {
 
 // URL is: localhost:3001/dashboard
 dashboardRouter.get('/', showDashboard)
-dashboardRouter.get('/items', showAllItems)
 
+// look for a post request (which is coming from the form)
 
+dashboardRouter.post('/sell', addItemToDashboard)
 
 
 module.exports = dashboardRouter;
