@@ -80,15 +80,15 @@ class User {
     return theItem;
   }
 
-  static buyItem(userid, itemid) {
+  static buyItem(userid, itemid, itemName) {
     return db
       .one(
         `
-            INSERT INTO owned_items (user_id, item_id)
-            values ($1, $2)
+            INSERT INTO owned_items (user_id, item_id, item_name)
+            values ($1, $2, $3)
             returning id
             `,
-        [userid, itemid]
+        [userid, itemid, itemName]
       )
       .then(newOwnedData => {
         return newOwnedData.id;

@@ -23,6 +23,24 @@ class Item {
         return arrayOfInstances;
       });
   }
+
+  static getAllClaimed() {
+    return db.any(`
+    select * from owned_items
+    
+    `)
+    .then(ownedItemsData => {
+      const ownedIds = [];
+      ownedItemsData.forEach(item => {
+
+        ownedIds.push(item.item_id);
+      })
+
+      return ownedIds;
+    })
+
+
+  }
   static getByID(id) {
     return db
       .one(
@@ -51,9 +69,6 @@ class Item {
       return itemInstance;
     })
   }
-
-
-
 
   deleteItem(id) {
     return db.result(

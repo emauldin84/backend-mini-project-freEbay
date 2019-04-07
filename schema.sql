@@ -17,6 +17,7 @@ name varchar(200)
 create table owned_items (
 id serial primary key,
 user_id integer references users(id),
-item_id integer 
+item_id integer,
+item_name varchar(200)
 
 );

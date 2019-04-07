@@ -3,6 +3,7 @@ const app = express();
 const port = 3001;
 
 const es6Renderer = require("express-es6-template-engine");
+const path = require('path');
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -17,6 +18,8 @@ app.use(session({
   store: new FileStore(),
   secret: 'efoijweaoiejawoifeawaefew'
 }));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/users", userRouter);
 app.use("/dashboard", dashboardRouter);

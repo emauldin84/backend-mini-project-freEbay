@@ -1,7 +1,22 @@
 const Item = require('../models/items');
-const User = require('../models/users')
+const User = require('../models/users');
+const Owned = require('../models/owned');
 
+async function getAllClaimed() {
+
+    const ownedInstances = await Owned.getAllOwned();
     
+    // console.log(ownedIds);
+    
+    // const ownedItemsPromises = ownedIds.map(id => Item.getByID(id));
+    
+    // console.log(ownedItemsPromises);
+
+    return ownedInstances;
+
+
+
+}   
 // coming from a get request
 async function showDashboard(req, res) {
         
@@ -13,18 +28,63 @@ async function showDashboard(req, res) {
         const liArray = [];
 
         allItemsArray.forEach(item => {
-            liArray.push(`<li>${item.name}</li>`)
+            liArray.push(`
+            <div class="mt-2 mb-2 d-flex justify-content-between border border-right-0 border-primary">
+            <li>${item.name}</li>
+            <form action="/dashboard/claim" method="POST">
+            <div class="form-group mb-0">
+            <input type="hidden" name="claimitem" value="${item.name}">
+            
+            </div>
+            
+            <button type="submit" class="btn-sm btn-primary">Claim Item</button>
+        </form>
+            </div>
+            
+            `)
         })
 
-    
-        // const newArray = `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`;
 
-        // console.log(newArray);
+
+
+        const allOwnedItems = await getAllClaimed();
+
+        // const allOwnedItemsNames = allOwnedItems.map(item => item.name);
+
+        const ownedItemsLiArray = [];
+
+        allOwnedItems.forEach(item => {
+
+            console.log(req.session.user);
+
+            if (item.user_id === req.session.user.id) {
+
+                const dashedItem = item.item_name.replace(' ', '-');
+
+
+                ownedItemsLiArray.push(`
+
+                <div class="d-flex mt-2 mb-2 justify-content-between border border-left-0 border-primary"
+            
+                <li>${item.item_name}</li>
+                <button type="submit" data-sell-btn class="btn-sm btn-primary ${dashedItem} ">Sell</button>
+
+                </div>
+                
+                
+                `);
+            }
+        });
+
+
+
     
         res.render('dashboard', {
             locals: {
                 // array: `${allItemsArray.map(item => `<li>${item.name}</li>`).join('')}`
-                array: liArray.join('')
+                user: req.session.user.firstName,
+                array: liArray.join(''),
+                claimed: ownedItemsLiArray.join('')
                     
                 }
         })
@@ -82,7 +142,7 @@ async function claimItem(req, res) {
         await itemInstance.deleteItem(itemInstance.id);
 
         // add item to owned items table
-        const ownedID = await User.buyItem(userID, itemInstance.id);
+        const ownedID = await User.buyItem(userID, itemInstance.id, itemInstance.name);
 
         res.redirect('/dashboard');
 

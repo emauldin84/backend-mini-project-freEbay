@@ -9,7 +9,7 @@
 </head>
 <body class="container">
 
-    <h1>This is the dashboard</h1>
+    <h1>Welcome, ${user}</h1>
     <a href="/login" class="btn btn-primary btn-lg active float-right d-inline" role="button">Logout</a>
     
     <div class="container d-flex justify-content-around">
@@ -34,9 +34,32 @@
         </form>
 
     </div>
-    <ul class="list-unstyled">${array}</ul>
+    <div class="container d-flex mt-5">
+
+        <div class="container border p-0 border-primary">
+
+            <h1>Items for sale</h1>
+            <ul class="list-unstyled">${array}</ul>
+
+        </div>
+
+        <div class="container border border-primary p-0">
+    
+            <h1>Your claimed items</h1>
+            <ul class="list-unstyled">${claimed}</ul>
+        </div>
+    </div>
+
+    <div data-sell-form-div class="container sell-form">
+
+        <form data-sell-form>
+
+
+        </form>
+    </div>
 
 
 
+<script src="/javascripts/dashboard.js"></script>
 </body>
 </html>

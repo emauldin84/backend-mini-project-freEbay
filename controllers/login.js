@@ -4,11 +4,15 @@ function showLogin(req, res) {
 
     // need to clear session here
 
-    res.render('index', {
-        locals: {
-            message: ''
-        }
-    });
+    req.session.destroy(() => {
+
+        res.render('index', {
+            locals: {
+                message: ''
+            }
+        });
+    })
+    
 }
 
 async function checkLogin(req, res) {
@@ -34,6 +38,7 @@ async function checkLogin(req, res) {
         // session is how we will track whether or not user can see the dashboard
         // store instance of user in the session
         req.session.user = theUser;
+        console.log(req.session.user);
 
         // redirect the page to localhost:3001/dashboard
         res.redirect('/dashboard');
