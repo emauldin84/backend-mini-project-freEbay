@@ -11,5 +11,6 @@ userRouter.post("/createUser", createUser);
 userRouter.get("/:userID", getUser);
 userRouter.post("/:userID/addItem", addItem);
 userRouter.post("/:userID/buy", buyItem)
+userRouter.get("/:userID/getowned")
 
 module.exports = userRouter;

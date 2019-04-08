@@ -7,8 +7,7 @@ class Item {
   }
 
   static getAllItems() {
-    return db
-      .any(
+    return db.any(
         `
         select * from items
         `
@@ -24,8 +23,7 @@ class Item {
       });
   }
   static getByID(id) {
-    return db
-      .one(
+    return db.one(
         `
         select * from items
         where id=${id}
@@ -51,9 +49,6 @@ class Item {
       return itemInstance;
     })
   }
-
-
-
 
   deleteItem(id) {
     return db.result(

@@ -3,12 +3,15 @@ const User = require('../models/users');
 function showLogin(req, res) {
 
     // need to clear session here
+    req.session.destroy(() => {
+        res.render('index', {
+            locals: {
+                message: ''
+            }
+        });
 
-    res.render('index', {
-        locals: {
-            message: ''
-        }
-    });
+    })
+
 }
 
 async function checkLogin(req, res) {
@@ -27,7 +30,7 @@ async function checkLogin(req, res) {
 
     console.log(`This is the username: ${theUser.username}`);
 
-    if (theUser.username && theUser.checkPassword(enteredPassword)) {
+    if (theUser.username && await theUser.checkPassword(enteredPassword)) {
     
         // then load the dashboard and save the user info in a session
 
