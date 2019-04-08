@@ -27,11 +27,11 @@ class User {
         
         `,
         [
-          userObject.first_name,
-          userObject.last_name,
-          userObject.username,
+          userObject.firstname,
+          userObject.lastname,
+          userObject.newusername,
           userObject.email,
-          userObject.password
+          userObject.newpassword
         ]
       )
       .then(newUserData => {

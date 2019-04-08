@@ -66,7 +66,15 @@ async function checkLogin(req, res) {
 
 }
 
+async function createNewUser(req, res) {
+
+    const newUserId = await User.createUser(req.body);
+
+    res.redirect('/login');
+}
+
 module.exports = {
     showLogin,
-    checkLogin
+    checkLogin,
+    createNewUser
 }
