@@ -2,6 +2,9 @@ const Item = require('../models/items');
 const User = require('../models/users');
 const Owned = require('../models/owned');
 
+// const escapeHtml = require('../utils');
+const escape = require('escape-html');
+
 async function getAllClaimed() {
 
     const ownedInstances = await Owned.getAllOwned();
@@ -103,8 +106,13 @@ async function addItemToDashboard(req, res){
     // only an instance of User can add an item.
     // if you're on the dashboard, then there must be a record of theUser in session
 
-    const theItem = req.body.additem;
+    // const theItem = req.body.additem;
+
+    const theItem = escape(req.body.additem);
+
+    console.log(`After it has been escaped: ${theItem}`);
     const newItemID = await User.addItem(theItem);
+
     res.redirect('/dashboard');
     
 

@@ -1,6 +1,12 @@
+require('dotenv').config();
+
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = process.env.PORT;
+
+const helmet = require('helmet');
+
+app.use(helmet());
 
 const es6Renderer = require("express-es6-template-engine");
 const path = require('path');
@@ -16,7 +22,7 @@ const FileStore = require('session-file-store')(session);
 
 app.use(session({
   store: new FileStore(),
-  secret: 'efoijweaoiejawoifeawaefew'
+  secret: process.env.SESSION_SECRET
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

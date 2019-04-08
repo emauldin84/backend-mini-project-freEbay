@@ -31,7 +31,7 @@ async function checkLogin(req, res) {
 
     console.log(`This is the username: ${theUser.username}`);
 
-    if (theUser.username && theUser.checkPassword(enteredPassword)) {
+    if (theUser.username && await theUser.checkPassword(enteredPassword)) {
     
         // then load the dashboard and save the user info in a session
 
@@ -55,7 +55,7 @@ async function checkLogin(req, res) {
             }
         })
     // if the password is incorrect
-    } else if (theUser.checkPassword(enteredPassword) === false) {
+    } else if (await theUser.checkPassword(enteredPassword) === false) {
         // render login page (index) again with the message password not correct
         res.render('index', {
             locals: {
