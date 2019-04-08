@@ -177,14 +177,16 @@ async function tradeToUser(req, res) {
     const usernameToTradeTo = req.body.usertotrade;
     const itemToTrade = req.body.itemtotrade;
 
+    const noDashesItem = itemToTrade.replace('-', ' ');
+
     const theUser = await User.getByUsername(usernameToTradeTo);
 
     const theUserID = theUser.id;
 
     // get item id of item to trade
-    const theOwnedItem = await Owned.getByName(itemToTrade, req.session.user.id);
+    const theOwnedItem = await Owned.getByName(noDashesItem, req.session.user.id);
 
-    const tradeID = await User.buyItem(theUserID, theOwnedItem.item_id, itemToTrade);
+    const tradeID = await User.buyItem(theUserID, theOwnedItem.item_id, noDashesItem);
 
     // delete item from specific user's owned items (the user who traded it away)
 
