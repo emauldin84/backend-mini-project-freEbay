@@ -154,11 +154,53 @@ async function claimItem(req, res) {
 
 }
 
+
+async function backToMarketplace(req, res) {
+
+    const itemToResell = req.body.resellitem;
+
+    const itemNoDashes = itemToResell.replace('-', ' ');
+
+    // need to add item to items table again
+    const resellID = await User.addItem(itemNoDashes);
+
+    // need to delete item from owned items table
+
+    await Owned.deleteByName(itemNoDashes);
+
+    res.redirect('/dashboard');
+}
+
+
+async function tradeToUser(req, res) {
+
+    const usernameToTradeTo = req.body.usertotrade;
+    const itemToTrade = req.body.itemtotrade;
+
+    const theUser = await User.getByUsername(usernameToTradeTo);
+
+    const theUserID = theUser.id;
+
+    // get item id of item to trade
+    const theOwnedItem = await Owned.getByName(itemToTrade, req.session.user.id);
+
+    const tradeID = await User.buyItem(theUserID, theOwnedItem.item_id, itemToTrade);
+
+    // delete item from specific user's owned items (the user who traded it away)
+
+    await Owned.deleteByUser(req.session.user.id, theOwnedItem.item_name);
+
+    res.redirect('/dashboard');
+
+
+}
 module.exports = {
 
     showDashboard,
     addItemToDashboard,
-    claimItem
+    claimItem,
+    backToMarketplace,
+    tradeToUser
 
 
 }

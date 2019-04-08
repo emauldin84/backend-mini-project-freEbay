@@ -24,14 +24,14 @@
             <button type="submit" class="btn btn-primary">Add Item</button>
         </form>
 
-        <form action="/dashboard/claim" method="POST">
+        <!-- <form action="/dashboard/claim" method="POST">
             <div class="form-group mr-5">
                 <label for="claimitem" class="sr-only">Claim Item</label>
                 <input name="claimitem" type="text" class="form-control" id="claimitem" aria-describedby="claimitem" placeholder="Claim Item here">
             </div>
 
             <button type="submit" class="btn btn-primary">Claim Item</button>
-        </form>
+        </form> -->
 
     </div>
     <div class="container d-flex mt-5">
@@ -45,14 +45,14 @@
 
         <div class="container border border-primary p-0">
     
-            <h1>Your claimed items</h1>
+            <h1>Your items</h1>
             <ul class="list-unstyled">${claimed}</ul>
         </div>
     </div>
 
-    <div data-sell-form-div class="container sell-form">
+    <div data-sell-form-div class="container border border-primary fixed-top bg-warning sell-form">
 
-        <form data-sell-form>
+        <form action="/dashboard/resell" method="POST" data-sell-form>
 
 
         </form>
